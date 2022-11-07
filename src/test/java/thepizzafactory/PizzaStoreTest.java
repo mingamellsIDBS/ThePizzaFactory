@@ -12,7 +12,7 @@ class PizzaStoreTest {
 
     @BeforeEach
     void setUp() {
-        pizzaStore = new PizzaStore();
+        pizzaStore = new PizzaStore(new SimplePizzaFactory());
     }
 
     @AfterEach
