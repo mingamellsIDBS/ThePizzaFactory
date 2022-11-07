@@ -1,2 +1,2 @@
 # ThePizzaFactory
-A simple working through of the Factory Design
+A simple working through of the Factory Design Pattern
