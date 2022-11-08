@@ -1,20 +1,10 @@
 package thepizzafactory;
 
-public class PizzaStore {
-
-    private final SimplePizzaFactory factory;
-
-    public PizzaStore(SimplePizzaFactory factory) {
-        this.factory = factory;
-    }
-
-    public Pizza orderPizza(){
-        return orderPizza("normal");
-    }
+public abstract class PizzaStore {
 
     public Pizza orderPizza(String type) {
         Pizza pizza;
-        pizza = factory.createPizza(type);
+        pizza = createPizza(type);
         pizza.prepare();
         pizza.bake();
         pizza.cut();
@@ -22,13 +12,6 @@ public class PizzaStore {
         return pizza;
     }
 
-    public static void main(String[] argv){
-        PizzaStore pizzaStore = new PizzaStore(new SimplePizzaFactory());
-
-        System.out.println("Ordering a pizza");
-        Pizza pizza = pizzaStore.orderPizza();
-        System.out.println("Pizza order completed: " + pizza);
-
-    }
+    abstract Pizza createPizza(String type);
 
 }

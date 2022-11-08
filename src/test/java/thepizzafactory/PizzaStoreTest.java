@@ -3,63 +3,78 @@ package thepizzafactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PizzaStoreTest {
 
-    private PizzaStore pizzaStore;
+    private ThePizzaStore pizzaStore;
+    private NYPizzaStore nyPizzaStore;
+    private ChicagoPizzaStore chicagoPizzaStore;
 
     @BeforeEach
     void setUp() {
-        pizzaStore = new PizzaStore(new SimplePizzaFactory());
+        pizzaStore = new ThePizzaStore(new SimplePizzaFactory());
+        nyPizzaStore = new NYPizzaStore();
+        chicagoPizzaStore = new ChicagoPizzaStore();
     }
 
     @AfterEach
     void tearDown() {
         pizzaStore = null;
+        nyPizzaStore = null;
+        chicagoPizzaStore = null;
     }
 
     @Test
-    void orderPizza() {
+    void testOrderPizza() {
         Pizza pizza = pizzaStore.orderPizza();
         assertEquals(Pizza.class, pizza.getClass());
     }
 
-    @Test
-    void orderCheesePizza() {
-        Pizza pizza = pizzaStore.orderPizza("cheese");
-        assertEquals(CheesePizza.class, pizza.getClass());
+    @ParameterizedTest
+    @CsvSource ({
+            "normal, Pizza",
+            "cheese, CheesePizza",
+            "pepperoni, PepperoniPizza",
+            "veggie, VeggiePizza",
+            "clam, ClamPizza",
+            "greek, GreekPizza",
+    })
+    void testThePizzaOrderPizzaVarieties(String type, String expected) {
+        String prefix = "thepizzafactory.";
+        Pizza pizza = pizzaStore.orderPizza(type);
+        assertEquals(prefix + expected, pizza.getClass().getName());
     }
 
-    @Test
-    void orderPepperoniPizza() {
-        Pizza pizza = pizzaStore.orderPizza("pepperoni");
-        assertEquals(PepperoniPizza.class, pizza.getClass());
+    @ParameterizedTest
+    @CsvSource ({
+            "normal, Pizza",
+            "cheese, CheesePizza",
+            "pepperoni, PepperoniPizza",
+            "veggie, VeggiePizza",
+            "clam, ClamPizza",
+    })
+    void testNYStyleOrderPizzaVarieties(String type, String expected) {
+        String prefix = "thepizzafactory.NYStyle";
+        Pizza pizza = nyPizzaStore.orderPizza(type);
+        assertEquals(prefix + expected, pizza.getClass().getName());
     }
 
-    @Test
-    void orderVeggiePizza() {
-        Pizza pizza = pizzaStore.orderPizza("veggie");
-        assertEquals(VeggiePizza.class, pizza.getClass());
-    }
-
-    @Test
-    void orderClamPizza() {
-        Pizza pizza = pizzaStore.orderPizza("clam");
-        assertEquals(ClamPizza .class, pizza.getClass());
-    }
-
-    @Test
-    void orderGreekPizza() {
-        Pizza pizza = pizzaStore.orderPizza("greek");
-        assertEquals(GreekPizza.class, pizza.getClass());
-    }
-
-    @Test
-    void orderNormalPizza() {
-        Pizza pizza = pizzaStore.orderPizza("normal");
-        assertEquals(Pizza.class, pizza.getClass());
+    @ParameterizedTest
+    @CsvSource ({
+            "normal, Pizza",
+            "cheese, CheesePizza",
+            "pepperoni, PepperoniPizza",
+            "veggie, VeggiePizza",
+            "clam, ClamPizza",
+    })
+    void testChicagoStyleOrderPizzaVarieties(String type, String expected) {
+        String prefix = "thepizzafactory.ChicagoStyle";
+        Pizza pizza = chicagoPizzaStore.orderPizza(type);
+        assertEquals(prefix + expected, pizza.getClass().getName());
     }
 
 }
