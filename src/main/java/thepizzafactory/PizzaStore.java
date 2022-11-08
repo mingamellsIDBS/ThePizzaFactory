@@ -9,12 +9,7 @@ public class PizzaStore {
     }
 
     public Pizza orderPizza(){
-        Pizza pizza = new Pizza();
-        pizza.prepare();
-        pizza.bake();
-        pizza.cut();
-        pizza.box();
-        return pizza;
+        return orderPizza("normal");
     }
 
     public Pizza orderPizza(String type) {
